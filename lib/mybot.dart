@@ -63,7 +63,7 @@ class _ChatbotState extends State<Chatbot> {
     return Scaffold(
       appBar: AppBar(
         elevation: 4, // Adds a shadow to the AppBar
-        backgroundColor: const Color.fromARGB(255, 6, 140, 111),
+        backgroundColor: Colors.black,
         centerTitle: true, // Center aligns the title
         title: const Text(
           'AI Chatbot',
@@ -71,16 +71,39 @@ class _ChatbotState extends State<Chatbot> {
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.white,
+            fontFamily: 'FontTitle',
           ),
         ),
       ),
       body: DashChat(
-          typingUsers: typing,
-          currentUser: myself,
-          onSend: (ChatMessage m) {
-            getData(m);
-          },
-          messages: allMessages),
+        typingUsers: typing,
+        currentUser: myself,
+        onSend: (ChatMessage m) {
+          getData(m);
+        },
+        messages: allMessages,
+        inputOptions: const InputOptions(
+          alwaysShowSend: true,
+          cursorStyle: CursorStyle(
+            color: Colors.black,
+          ),
+        ),
+        messageOptions: MessageOptions(
+          currentUserContainerColor: Colors.black,
+          avatarBuilder: yourAvatarBuilder,
+        ),
+      ),
+    );
+  }
+
+  Widget yourAvatarBuilder(
+      ChatUser user, Function? onAvatarTap, Function? onAvatarLongPress) {
+    return Center(
+      child: Image.asset(
+        'assets/images/logo.png',
+        height: 40,
+        width: 40,
+      ),
     );
   }
 }
