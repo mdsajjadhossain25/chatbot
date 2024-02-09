@@ -22,8 +22,10 @@ class _ChatbotState extends State<Chatbot> {
   final header = {'Content-Type': 'application/json'};
 
   getData(ChatMessage m) async {
-    typing.add(bot);
-    allMessages.insert(0, m);
+    typing.add(
+        bot); // when this function is triggered the typing message will show at the screen.
+    allMessages.insert(0,
+        m); // inserting message to the ui. message is shown at the ui that is typed by the user.
     setState(() {});
 
     var data = {
@@ -36,7 +38,8 @@ class _ChatbotState extends State<Chatbot> {
       ]
     };
 
-    await http
+    await http // sending http post request. here we pass url, headers and body.
+        //headers: metadata about the client making the request. Body: Data that is send by the client to the user
         .post(Uri.parse(ourUrl), headers: header, body: jsonEncode(data))
         .then((value) {
       if (value.statusCode == 200) {
@@ -54,7 +57,7 @@ class _ChatbotState extends State<Chatbot> {
         // print("Error Occured");
       }
     }).catchError((e) {});
-    typing.remove(bot);
+    typing.remove(bot); // after getting the messae typing will be removed.
     setState(() {});
   }
 
@@ -76,6 +79,7 @@ class _ChatbotState extends State<Chatbot> {
         ),
       ),
       body: DashChat(
+        // 3 property defined in dashchat package: current user, on send, messages
         typingUsers: typing,
         currentUser: myself,
         onSend: (ChatMessage m) {
